@@ -52,11 +52,11 @@ def prep_train_models(model = "all", cat = "general"):
     X = simple_df["Original article text"].values
     y = simple_df["Verdict"].replace("FALSE",1).replace("TRUE",0).values
     #preproccess into bag of words and save the pckl of the bag of words into models
-    
+
     X_preproc = [preprocessing(i) for i in X]
     cv = CountVectorizer()
     X_cv = cv.fit_transform(X)
-    with open('models/BoW.pickle', 'wb') as handle:
+    with open('models/BoW.pkl', 'wb') as handle:
         pickle.dump(cv, handle, protocol=pickle.HIGHEST_PROTOCOL)
     #naive bayes
     if cat == "general" or cat == "Naive Bayes":
@@ -67,7 +67,7 @@ def prep_train_models(model = "all", cat = "general"):
         pkl_filename = "models/naive_bayes_model" +"_" +cat+ ".pkl"
         with open(pkl_filename, 'wb') as file:
             pickle.dump(naive_bayes, file)
-    #logisitic regression        
+    #logisitic regression
     if cat == "general" or cat == "logisitic regression":
         # Initializing the model
         logistic_regression = LogisticRegression(C=1, random_state = 0,  max_iter=1000)
