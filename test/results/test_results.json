@@ -1,0 +1,38 @@
+{
+    "./models/naive_bayes_model_general.pkl": {
+        "acc": "1.0",
+        "prec": "1.0",
+        "recall": "1.0",
+        "confusion_matrix": "[[16  0]\n [ 0 12]]"
+    },
+    "./models/logistic_regression_model_general.pkl": {
+        "acc": "1.0",
+        "prec": "1.0",
+        "recall": "1.0",
+        "confusion_matrix": "[[16  0]\n [ 0 12]]"
+    },
+    "./models/svm_model_general.pkl": {
+        "acc": "1.0",
+        "prec": "1.0",
+        "recall": "1.0",
+        "confusion_matrix": "[[16  0]\n [ 0 12]]"
+    },
+    "./models/decision_tree_model_general.pkl": {
+        "acc": "0.8571428571428571",
+        "prec": "0.9",
+        "recall": "0.75",
+        "confusion_matrix": "[[15  1]\n [ 3  9]]"
+    },
+    "./models/random_forest_model_general.pkl": {
+        "acc": "0.9642857142857143",
+        "prec": "1.0",
+        "recall": "0.9166666666666666",
+        "confusion_matrix": "[[16  0]\n [ 1 11]]"
+    },
+    "./models/stacking_model_general.pkl": {
+        "acc": "0.6071428571428571",
+        "prec": "1.0",
+        "recall": "0.08333333333333333",
+        "confusion_matrix": "[[16  0]\n [11  1]]"
+    }
+}
