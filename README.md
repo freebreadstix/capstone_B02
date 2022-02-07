@@ -1,7 +1,24 @@
-capstone_b02
-==============================
+# Group B02 Capstone project repo
 
-A short description of the project.
+To run:
+
+
+If running from DSMLP cluster:
+```
+ssh user@dsmlp-login.ucsd.edu
+launch-scipy-ml.sh -i freebreadstix/q1-replication
+```
+```
+git clone https://github.com/freebreadstix/capstone_B02.git
+cd capstone_B02
+```
+If not merged to main, make sure to switch to branch with run.py
+```
+git checkout lucas-runpy
+```
+```
+python3 run.py test
+```
 
 Project Organization
 ------------
