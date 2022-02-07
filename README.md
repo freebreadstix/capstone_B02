@@ -8,6 +8,9 @@ If running from DSMLP cluster:
 ssh user@dsmlp-login.ucsd.edu
 launch-scipy-ml.sh -i freebreadstix/q1-replication
 ```
+Else be sure to run in container: https://hub.docker.com/repository/docker/freebreadstix/q1-replication
+
+Then:
 ```
 git clone https://github.com/freebreadstix/capstone_B02.git
 cd capstone_B02
@@ -16,6 +19,8 @@ If not merged to main, make sure to switch to branch with run.py
 ```
 git checkout lucas-runpy
 ```
+
+Run run.py
 ```
 python3 run.py test
 ```
