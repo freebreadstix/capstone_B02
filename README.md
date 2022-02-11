@@ -24,6 +24,10 @@ Run run.py
 ```
 python3 run.py test
 ```
+Link to Presentation Website
+```
+https://micmiccitymax.github.io/dsc180b02-site/
+```
 
 Project Organization
 ------------
