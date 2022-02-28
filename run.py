@@ -23,14 +23,13 @@ def main(targets):
     # TF-IDF Count vectorizer trained on original study data
     # cv = pickle.load(open('models/vector.pickle', 'rb'))
     # x_transform = cv.transform(x_preproc)
-    if targets[0] == "test":
-        # bow = pickle.load('models/BoW.pkl')
-        cv = CountVectorizer()
-        x_transform = cv.fit_transform(X)
+    if targets[1] == "spacy":
+        x_transform = spacy_preprocess_texts(X, 'test1')
+        
 
     else:
-        # TODO: import count vectorize util, use
-        ...
+        cv = CountVectorizer()
+        x_transform = cv.fit_transform(X)
 
     results_dict = {}
 
