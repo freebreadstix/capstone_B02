@@ -1,3 +1,4 @@
+import json
 import os
 import pickle
 
@@ -11,8 +12,12 @@ from sklearn.tree import DecisionTreeClassifier
 from src.preprocessing.old_utils import evaluate
 from src.preprocessing.preprocessing import get_Xy_from_sheet, spacy_preprocess_texts
 
+model_save_path = './models/'
+result_save_path = './results/'
 
-data_path = "data/processed/grouped_polifact - grouped_polifact.csv"
+preproc = 'bow'
+
+data_path = "data/processed/joined_data.csv"
 results_prefix = './test/results/'
 
 # Create DataFrame and new column for analysis
@@ -24,12 +29,24 @@ X, y = get_Xy_from_sheet(data_path, X_col='Original article text', y_col='Verdic
 # print(vectors)
 # print(nlp.vocab.vectors.key2row)
 
-cv = CountVectorizer()
-X_transform = cv.fit_transform(X)
+# Preprocessing TODO: 
+# n-gram
+# TF-IDF?
 
-idx2word = {idx: word for word, idx in cv.vocabulary_.items()}
+# spacy preprocessing: lemma, stem, etc
+# Remove punct, nums
 
-X_train, X_test, y_train, y_test = train_test_split(X_transform, y, shuffle=True, random_state=42)
+# Find way to incorporate sentence structure
+
+# Include parts of speech, 
+
+if preproc == 'bow':
+    cv = CountVectorizer()
+    X_transform = cv.fit_transform(X)
+
+    idx2word = {idx: word for word, idx in cv.vocabulary_.items()}
+
+    X_train, X_test, y_train, y_test = train_test_split(X_transform, y, shuffle=True, random_state=42)
 
 
 models = {
@@ -40,20 +57,21 @@ models = {
 }
 
 # LogReg, Decision Trees, Random Forests, SVMs
-model_save_path = './models/'
+
 dataset_name = data_path.split('.')[0].split('/')[-1]
 
 for model_name, model in models.items():
-    fname = model_save_path + dataset_name + model_name + '.pkl'
+    fname = dataset_name + '_' + model_name
+    pklname = model_save_path + fname + '.pkl'
 
-    if fname not in os.listdir(model_save_path):
+    if pklname not in os.listdir(model_save_path):
         model.fit(X_train, y_train)
         preds = model.predict(X_test)
 
-        pickle.dump(model, open(fname, 'wb'))
+        pickle.dump(model, open(pklname, 'wb'))
 
     else:
-        model = pickle.load(open(fname, 'rb'))
+        model = pickle.load(open(pklname, 'rb'))
 
 
     acc, prec, recall = evaluate(y_test, preds)
@@ -70,7 +88,10 @@ for model_name, model in models.items():
     coefs = [(coef, i) for i, coef in enumerate(coefs)]
     coefs.sort(key=lambda x: x[0] ** 2, reverse=True)
 
-    most_important_words = [idx2word[idx] for coef, idx in coefs[:50]]
+    most_important_words = {idx2word[idx]: coef for coef, idx in coefs[:1000]}
 
-    print(f'Most important words for {model_name}: {most_important_words}')
+    print(f'Most important words for {model_name}: {most_important_words[:20]}')
+    resultname = result_save_path + fname + '_' + preproc + '.json'
+    with open(resultname, 'w') as f:
+        json.dump(most_important_words, f)
 
