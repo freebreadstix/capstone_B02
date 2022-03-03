@@ -1,9 +1,10 @@
 import json
 import os
 import pickle
+import yaml
 
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
@@ -20,6 +21,9 @@ preproc = 'bow'
 data_path = "data/processed/joined_data.csv"
 results_prefix = './test/results/'
 
+with open('config.yml', 'r') as f:
+    config = yaml.safe_load(f)
+
 # Create DataFrame and new column for analysis
 X, y = get_Xy_from_sheet(data_path, X_col='Original article text', y_col='Verdict')
 
@@ -31,22 +35,27 @@ X, y = get_Xy_from_sheet(data_path, X_col='Original article text', y_col='Verdic
 
 # Preprocessing TODO: 
 # n-gram
-# TF-IDF?
 
 # spacy preprocessing: lemma, stem, etc
 # Remove punct, nums
 
 # Find way to incorporate sentence structure
+# Include parts of speech
 
-# Include parts of speech, 
 
-if preproc == 'bow':
-    cv = CountVectorizer()
+if config['preprocessing']['type'] == 'tfidf':
+    tfidf = TfidfVectorizer(ngram_range=(config['preprocessing']['ngram_min'], config['preprocessing']['ngram_max']))
+    X_transform = tfidf.fit_transform(X)
+
+    idx2word = {idx: word for word, idx in tfidf.vocabulary_.items()}
+
+else:
+    cv = CountVectorizer(ngram_range=(config['preprocessing']['ngram_min'], config['preprocessing']['ngram_max']))
     X_transform = cv.fit_transform(X)
 
     idx2word = {idx: word for word, idx in cv.vocabulary_.items()}
 
-    X_train, X_test, y_train, y_test = train_test_split(X_transform, y, shuffle=True, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X_transform, y, shuffle=True, random_state=42)
 
 
 models = {
@@ -88,9 +97,11 @@ for model_name, model in models.items():
     coefs = [(coef, i) for i, coef in enumerate(coefs)]
     coefs.sort(key=lambda x: x[0] ** 2, reverse=True)
 
-    most_important_words = {idx2word[idx]: coef for coef, idx in coefs[:1000]}
+    num_words = config['output']['num_words']
+    most_important_words = {idx2word[idx]: coef for coef, idx in coefs[:num_words]}
 
-    print(f'Most important words for {model_name}: {most_important_words[:20]}')
+    if config['output']['print']: print(f'Most important words for {model_name}: {most_important_words}')
+
     resultname = result_save_path + fname + '_' + preproc + '.json'
     with open(resultname, 'w') as f:
         json.dump(most_important_words, f)
