@@ -19,7 +19,6 @@ result_save_path = './results/'
 preproc = 'bow'
 
 data_path = "data/processed/joined_data.csv"
-results_prefix = './test/results/'
 
 with open('config.yml', 'r') as f:
     config = yaml.safe_load(f)

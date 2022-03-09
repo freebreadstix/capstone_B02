@@ -1,5 +1,5 @@
 # Note: paths not being used atm
-data_path: 'data/processed/joined_data.csv'
+data_path: './data/processed/joined_data.csv'
 model_save_path: './models/'
 result_save_path: './results/'
 
@@ -10,5 +10,5 @@ preprocessing:
 
 output:
   num_words: 500
-  print: False
+  print: True
 
