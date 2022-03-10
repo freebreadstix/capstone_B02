@@ -1,5 +1,5 @@
 import pandas as pd
-import spacy
+# import spacy
 
 def get_Xy_from_sheet(file, X_col="Original article text", y_col="Verdict", true_val="TRUE", false_val="FALSE"):
     df = pd.read_csv(file)
