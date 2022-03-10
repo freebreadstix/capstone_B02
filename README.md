@@ -22,7 +22,7 @@ git checkout lucas-runpy
 
 Run run.py
 ```
-python3 run.py test
+python3 run.py test_config.yml
 ```
 Link to Presentation Website
 ```
