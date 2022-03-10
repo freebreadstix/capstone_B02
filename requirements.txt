@@ -10,4 +10,9 @@ flake8
 python-dotenv>=0.5.1
 
 
+matplotlib
+numpy
+pandas
 scikit-learn==0.24.2
+spacy
+wordcloud

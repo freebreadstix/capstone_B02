@@ -1,0 +1,14 @@
+# Note: paths not being used atm
+data_path: 'test/testdata/cleaned data - Sheet1.csv'
+model_save_path: './test/models/'
+result_save_path: './test/results/'
+
+preprocessing:
+  type: 'tfidf'
+  ngram_min: 1
+  ngram_max: 1
+
+output:
+  num_words: 10
+  print: True
+
