@@ -5,12 +5,11 @@ import pandas as pd
 import seaborn as sns
 import wordcloud
 import nltk
-from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
+# from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from nltk.tokenize import word_tokenize
 from nltk.tokenize import TweetTokenizer
-# from gensim.corpora.dictionary import Dictionary
 from matplotlib import pyplot as plt
 from sklearn import datasets
 from sklearn.tree import DecisionTreeClassifier 
