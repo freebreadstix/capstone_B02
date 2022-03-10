@@ -89,5 +89,5 @@ target/
 .mypy_cache/
 
 # Testing
-/test/results/
-/test/models/
+# /test/results/
+# /test/models/*
