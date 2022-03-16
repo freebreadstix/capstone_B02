@@ -3,9 +3,9 @@ import string
 import numpy as np
 import pandas as pd
 import seaborn as sns
-# import wordcloud
+import wordcloud
 import nltk
-# from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
+from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from nltk.tokenize import word_tokenize
