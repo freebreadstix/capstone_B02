@@ -20,7 +20,9 @@ If not merged to main, make sure to switch to branch with run.py
 git checkout lucas-runpy
 ```
 
-Run run.py
+Configure config yaml with appropriate parameters. You can make your own .yml using config.yml as reference, just pass it as the argument on CLI
+
+Run run.py w/ config yaml corresponding to configuration you are running. For testing this is test_config.yml
 ```
 python3 run.py test_config.yml
 ```
