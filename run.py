@@ -57,30 +57,41 @@ def main(targets):
     }
 
     dataset_name = data_path.split('.')[-2].split('/')[-1]
+    results_dict = {}
 
     for model_name, model in models.items():
         fname = dataset_name + '_' + model_name
         pklname = model_save_path + fname + '.pkl'
-        print(fname)
         if pklname not in os.listdir(model_save_path):
             model.fit(X_train, y_train)
-            preds = model.predict(X_test)
-
-            # TODO: check why no pickle dump
+            
             pickle.dump(model, open(pklname, 'wb'))
-            print(pklname)
 
         else:
             model = pickle.load(open(pklname, 'rb'))
 
+        preds = model.predict(X_test)
+
+        if config['output']['save_predictions']:
+            result_path = result_save_path + f'{fname}_preds.csv'
+            np.savetxt(result_path, preds, delimiter=",")
 
         acc, prec, recall = evaluate(y_test, preds)
+
+        results_dict[model_name] = {}
+        results_dict[model_name]['acc'] = str(acc)
+        results_dict[model_name]['prec'] = str(prec)
+        results_dict[model_name]['recall'] = str(recall)
+
+        results_dict[model_name]['confusion_matrix'] = str(confusion_matrix(y_test, preds))
+        
 
         if model_name in ['logistic-regression', 'svm']:
             coefs = model.coef_[0]
             if model_name == 'svm':
                 coefs = coefs.toarray().reshape((-1,))
-            
+        
+
 
         elif model_name in ['decision-tree', 'random-forest']:
             coefs = model.feature_importances_
@@ -91,47 +102,16 @@ def main(targets):
         num_words = config['output']['num_words']
         most_important_words = {idx2word[idx]: coef for coef, idx in coefs[:num_words]}
 
-        if config['output']['print']: print(f'Most important words for {model_name}: {most_important_words}')
+        if config['output']['print_words']: print(f'Most important words for {model_name}: {most_important_words}')
 
         resultname = result_save_path + fname + '_' + preproc + '.json'
         with open(resultname, 'w') as f:
             json.dump(most_important_words, f)
 
-
-
-    # arr = os.listdir('./models/')
-    # print(arr)
-
-    # for name, prefix in zip(models, model_path_prefixes):
-
-    #     for model_path_prefix in [prefix, prefix + '_general']:
-    #         model_path = f'./{model_path_prefix}{extension}'
-    #         try:
-    #             model = pickle.load(open(model_path, 'rb'))
-    #         except:
-    #             print(f"Can't locate model {name} at {model_path}")
-    #             continue
-
-    #         print('h')
-    #         pred = model.predict(x_transform)
-    #         result_path = results_prefix + f'pred/{model_path_prefix}.csv'
-    #         np.savetxt(result_path, pred, delimiter=",")
-
-    #         results_dict[model_path] = {}
-            
-    #         acc, prec, recall = evaluate(y, pred)  
-    #         results_dict[model_path]['acc'] = str(acc)
-    #         results_dict[model_path]['prec'] = str(prec)
-    #         results_dict[model_path]['recall'] = str(recall)
-
-    #         results_dict[model_path]['confusion_matrix'] = str(confusion_matrix(y, pred))
-            
-
-
-    # with open(results_prefix + 'test_results.json', 'w', encoding='utf-8') as f:
-    #     json.dump(results_dict, f, ensure_ascii=False, indent=4)
-
-    # print(results_dict)
+    with open(result_save_path + dataset_name + '_classification_results.json', 'w', encoding='utf-8') as f:
+        json.dump(results_dict, f, ensure_ascii=False, indent=4)
+    if config['output']['print_results']:
+        print(results_dict)
 
 
 if __name__ == '__main__':
