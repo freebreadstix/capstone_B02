@@ -1,5 +1,5 @@
 # Note: paths not being used atm
-data_path: './data/processed/joined_data.csv'
+data_path: './data/processed/general.csv'
 model_save_path: './models/'
 result_save_path: './results/'
 
@@ -13,4 +13,7 @@ output:
   save_predictions: True
   print_results: True
   print_words: True
+  intersections: False
+  decision_tree_model: True
+  wordcloud: True
 
