@@ -3,7 +3,6 @@ import os
 import pickle
 import sys
 import yaml
-
 import numpy as np
 
 from sklearn.ensemble import RandomForestClassifier
@@ -14,12 +13,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
-from src.preprocessing.old_utils import evaluate
+from src.preprocessing.old_utils import evaluate, important_cloud, topicintersection, intersect_all, plot_dtree
 from src.preprocessing.preprocessing import get_Xy_from_sheet, spacy_preprocess_texts
 
 
 def main(targets):
-
+    DT = DecisionTreeClassifier()
     with open(targets[0], 'r') as f:
         config = yaml.safe_load(f)
 
@@ -107,11 +106,24 @@ def main(targets):
         resultname = result_save_path + fname + '_' + preproc + '.json'
         with open(resultname, 'w') as f:
             json.dump(most_important_words, f)
+        if config["output"]["wordcloud"]:
+            important_cloud(resultname, result_save_path + "Figures/"+ fname+"cloud")
+        if config["output"]["decision_tree_model"] and type(model) == type(DT):
+            plot_dtree(pklname, result_save_path + "Figures/" +fname+"_plotted", 40, 40)
+            
 
     with open(result_save_path + dataset_name + '_classification_results.json', 'w', encoding='utf-8') as f:
         json.dump(results_dict, f, ensure_ascii=False, indent=4)
     if config['output']['print_results']:
         print(results_dict)
+    if config["output"]["wordcloud"]:
+        important_cloud(resultname, result_save_path + "Figures/"+ fname+"_cloud")
+        #Requires important words for eachmodel
+    if config["output"]["intersections"]:
+        intersect_dict = intersect_all()
+        with open(result_save_path + "_intersections.json", "w") as f:
+            json.dump(intersect_dict,f)
+        
 
 
 if __name__ == '__main__':
