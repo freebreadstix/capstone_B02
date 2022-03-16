@@ -1,10 +1,12 @@
 import re
+import pickle as pkl
 import string
 import numpy as np
 import pandas as pd
 import seaborn as sns
 import wordcloud
 import nltk
+import json
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
@@ -105,10 +107,10 @@ path is the path we want to save to and under what name
 width is how wide we want the figure to be
 height is how tall we want the figure to be
 """
-def plot_dtree(pkl, path, width, height ):
-    dtree = pickle.load(open(pkl, "rb"))
+def plot_dtree(pickle, path, width, height ):
+    dtree = pkl.load(open(pickle, "rb"))
     fig = plt.figure(figsize = (width,height))
-    _ = tree.plot_tree(clf, filled = True)
+    _ = tree.plot_tree(dtree, filled = True)
     fig1= plt.gcf()
     fig1.savefig(path+ ".png")
 def create_token2id(X_train_preproc, X_test_preproc, X_val_preproc):
