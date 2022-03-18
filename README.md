@@ -31,6 +31,16 @@ Link to Presentation Website
 https://micmiccitymax.github.io/dsc180b02-site/
 ```
 
+Explainations of Config.yml output options
+```
+num_words: how many words are in the "important words" for the models
+save_predictions: saves output of predictions to a file
+print_results: prints results of evaluations to terminal
+print words: Prints important words of each model in terminal
+intersections: computes the important words similarity of all combinations of model and topics, USE ONLY WHEN YOU HAVE ALL MODELS MADE
+decision_tree_model: outputs a plotting of decision tree to a figure
+wordcloud: outputs an important word wordcloud to a figure in the figures folder
+```
 Project Organization
 ------------
 
