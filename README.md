@@ -41,6 +41,9 @@ intersections: computes the important words similarity of all combinations of mo
 decision_tree_model: outputs a plotting of decision tree to a figure
 wordcloud: outputs an important word wordcloud to a figure in the figures folder
 ```
+
+**Note**: if you are using intersections, decision_tree_model, or wordcloud options, make sure data is saved in data/processed/general.csv
+
 Project Organization
 ------------
 
