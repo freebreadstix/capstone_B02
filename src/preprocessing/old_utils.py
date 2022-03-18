@@ -4,10 +4,9 @@ import string
 import numpy as np
 import pandas as pd
 import seaborn as sns
-import wordcloud
+
 import nltk
 import json
-from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from nltk.tokenize import word_tokenize
@@ -41,6 +40,8 @@ Generates a word cloud from the words in the json file given by the variable (wo
 the path variable is where we want to save the word cloud to and what name we want
 """
 def important_cloud(words,path):
+    import wordcloud
+    from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
     f = open(words)
     most_important_words = json.load(f)
     wc = WordCloud()
