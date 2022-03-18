@@ -13,7 +13,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
-from src.preprocessing.old_utils import evaluate, important_cloud, topicintersection, intersect_all, plot_dtree
+from src.preprocessing.old_utils import evaluate
 from src.preprocessing.preprocessing import get_Xy_from_sheet #, spacy_preprocess_texts
 
 
@@ -29,6 +29,9 @@ def main(targets):
     model_save_path = config['model_save_path']
     result_save_path = config['result_save_path']
 
+
+    if config['output']['intersections'] or config['output']['decision_tree_model'] or config['output']['wordcloud']:
+        from src.preprocessing.old_utils import important_cloud, topicintersection, intersect_all, plot_dtree
 
     # Load, preprocess data
     X, y = get_Xy_from_sheet(data_path, X_col='Original article text', y_col='Verdict')
