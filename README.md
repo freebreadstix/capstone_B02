@@ -42,7 +42,7 @@ decision_tree_model: outputs a plotting of decision tree to a figure
 wordcloud: outputs an important word wordcloud to a figure in the figures folder
 ```
 
-**Note**: if you are using intersections, decision_tree_model, or wordcloud options, make sure data is saved in data/processed/general.csv
+**Note**: if you are using intersections, decision_tree_model, or wordcloud options, make sure data is saved as 'data/processed/general.csv' and has columns 'Original Article Text' as the document text, 'Verdict' as 'TRUE' or 'FALSE', 'Category' as category, or change code within old_utils.py
 
 Project Organization
 ------------
