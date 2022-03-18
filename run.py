@@ -14,7 +14,7 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
 from src.preprocessing.old_utils import evaluate, important_cloud, topicintersection, intersect_all, plot_dtree
-from src.preprocessing.preprocessing import get_Xy_from_sheet, spacy_preprocess_texts
+from src.preprocessing.preprocessing import get_Xy_from_sheet #, spacy_preprocess_texts
 
 
 def main(targets):

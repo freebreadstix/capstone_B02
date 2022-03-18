@@ -13,4 +13,6 @@ output:
   save_predictions: True
   print_results: True
   print_words: True
-
+  intersections: False
+  decision_tree_model: False
+  wordcloud: False
